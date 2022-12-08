@@ -76,9 +76,18 @@ student_one.courses_in_progress += ['Python']
 student_one.courses_in_progress += ['Git']
 student_one.finished_courses += ['Введение в программирование']
 
+student_two = Student('Sergey', 'Korolkov', 'Male')
+student_two.courses_in_progress += ['Python']
+student_two.courses_in_progress += ['Git']
+student_two.finished_courses += ['Введение в программирование']
+
 reviewer_one = Reviewer('Eduard', 'Pascal')
 reviewer_one.courses_attached += ['Python']
 reviewer_one.courses_attached += ['Git']
+
+reviewer_two = Reviewer('Eduard', 'Pascal')
+reviewer_two.courses_attached += ['Python']
+reviewer_two.courses_attached += ['Git']
 
 lecturer_one = Lecturer('Sergey', 'Svetlakov')
 lecturer_one.courses_attached += ['Python']
@@ -88,22 +97,57 @@ lecturer_two = Lecturer('Semen', 'Slepakov')
 lecturer_two.courses_attached += ['Python']
 lecturer_two.courses_attached += ['Git']
 
-reviewer_one.rate_student(student_one, 'Python', 4)
-reviewer_one.rate_student(student_one, 'Python', 3)
-reviewer_one.rate_student(student_one, 'Git', 1)
-reviewer_one.rate_student(student_one, 'Git', 8)
-
-student_one.rate_lecturer(lecturer_one, 'Python', 5)
-student_one.rate_lecturer(lecturer_one, 'Python', 3)
-student_one.rate_lecturer(lecturer_one, 'Git', 3)
-student_one.rate_lecturer(lecturer_one, 'Git', 6)
+student_one.rate_lecturer(lecturer_one, 'Python', 10)
+student_one.rate_lecturer(lecturer_one, 'Python', 9)
+student_one.rate_lecturer(lecturer_one, 'Python', 8)
+student_one.rate_lecturer(lecturer_one, 'Git', 10)
+student_one.rate_lecturer(lecturer_one, 'Git', 9)
 student_one.rate_lecturer(lecturer_one, 'Git', 8)
 
-student_one.rate_lecturer(lecturer_two, 'Python', 3)
-student_one.rate_lecturer(lecturer_two, 'Python', 2)
-student_one.rate_lecturer(lecturer_two, 'Git', 1)
-student_one.rate_lecturer(lecturer_two, 'Git', 5)
-student_one.rate_lecturer(lecturer_two, 'Git', 2)
+student_two.rate_lecturer(lecturer_two, 'Python', 8)
+student_two.rate_lecturer(lecturer_two, 'Python', 7)
+student_two.rate_lecturer(lecturer_two, 'Python', 6)
+student_two.rate_lecturer(lecturer_two, 'Git', 6)
+student_two.rate_lecturer(lecturer_two, 'Git', 5)
+student_two.rate_lecturer(lecturer_two, 'Git', 4)
+
+reviewer_one.rate_student(student_one, 'Python', 9)
+reviewer_one.rate_student(student_one, 'Python', 8)
+reviewer_one.rate_student(student_one, 'Python', 7)
+reviewer_one.rate_student(student_one, 'Git', 5)
+reviewer_one.rate_student(student_one, 'Git', 4)
+reviewer_one.rate_student(student_one, 'Git',3)
+
+reviewer_two.rate_student(student_two, 'Python', 9)
+reviewer_two.rate_student(student_two, 'Python', 8)
+reviewer_two.rate_student(student_two, 'Python', 7)
+reviewer_two.rate_student(student_two, 'Git', 9)
+reviewer_two.rate_student(student_two, 'Git', 8)
+reviewer_two.rate_student(student_two, 'Git', 7)
+
+all_students = [student_one, student_two]
+
+def average_student_grade(student, course):
+    grade_list = []
+    for student in all_students:
+        if course in student.grades:
+            grade_list += student.grades[course]
+        else:
+            return 'Ошибка'
+        result = sum(grade_list) / len(grade_list)
+    return result
+
+all_lecturers = [lecturer_one, lecturer_two]
+
+def average_lecturer_grade(lecturer, course):
+    list_grade = []
+    for lecturer in all_lecturers:
+        if course in lecturer.grades:
+            list_grade += lecturer.grades[course]
+        else:
+            return 'Ошибка'
+        result = sum(list_grade) / len(list_grade)
+    return result
 
 print('')
 print(reviewer_one)
@@ -115,3 +159,11 @@ print('')
 print(student_one)
 print('')
 print(lecturer_one.__lt__(lecturer_two))
+print('')
+print(f"Средняя оценка студентов по курсу Python: {average_student_grade(all_students, 'Python')}")
+print('')
+print(f"Средняя оценка студентов по курсу Git: {average_student_grade(all_students, 'Git')}")
+print('')
+print(f"Средняя оценка лекторов по курсу Python: {average_lecturer_grade(all_lecturers, 'Python')}")
+print('')
+print(f"Средняя оценка лекторов по курсу Git: {average_lecturer_grade(all_lecturers, 'Git')}")
